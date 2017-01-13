@@ -3,3 +3,10 @@
 ################################################################################
 
 /Demo/.vs/Demo/v14
+/Demo/Demo/bin
+/Demo/Demo/obj/Debug
+/Demo/Demo.Tests/bin/Debug
+/Demo/Demo.Tests/obj/Debug
+/Demo/packages
+/Demo/Demo/Demo.csproj.user
+/Demo/.vs/config/applicationhost.config
