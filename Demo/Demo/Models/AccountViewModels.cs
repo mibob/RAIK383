@@ -79,6 +79,8 @@ namespace Demo.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public ChangeMyInfoViewModel MyInfo { get; set; } = new ChangeMyInfoViewModel { FirstName = string.Empty, LastName = string.Empty, PostalAddress = string.Empty };
     }
 
     public class ResetPasswordViewModel

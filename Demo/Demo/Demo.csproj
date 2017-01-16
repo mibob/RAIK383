@@ -177,6 +177,14 @@
     <Compile Include="Migrations\201701131657202_Initial.Designer.cs">
       <DependentUpon>201701131657202_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701160838379_PostalAddress.cs" />
+    <Compile Include="Migrations\201701160838379_PostalAddress.Designer.cs">
+      <DependentUpon>201701160838379_PostalAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701160955157_FirstLastNames.cs" />
+    <Compile Include="Migrations\201701160955157_FirstLastNames.Designer.cs">
+      <DependentUpon>201701160955157_FirstLastNames.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -239,6 +247,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Manage\ChangeMyInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -254,6 +263,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701131657202_Initial.resx">
       <DependentUpon>201701131657202_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701160838379_PostalAddress.resx">
+      <DependentUpon>201701160838379_PostalAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701160955157_FirstLastNames.resx">
+      <DependentUpon>201701160955157_FirstLastNames.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

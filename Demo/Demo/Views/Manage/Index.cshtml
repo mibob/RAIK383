@@ -10,6 +10,19 @@
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>First Name:</dt>
+        <dd>@Html.DisplayFor(m=>m.FirstName)</dd>
+        <dt>Last Name:</dt>
+        <dd>
+            @Html.DisplayFor(m => m.LastName)
+        </dd>
+        <dt>Postal Address:</dt>
+        <dd>
+            @Html.DisplayFor(m=>m.PostalAddress)
+            [
+                @Html.ActionLink("Change your info", "ChangeMyinfo")
+            ]
+        </dd>
         <dt>Password:</dt>
         <dd>
             [

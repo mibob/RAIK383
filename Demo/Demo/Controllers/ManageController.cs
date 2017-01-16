@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Demo.Models;
@@ -64,13 +65,21 @@ namespace Demo.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+
+            //var manager = new UserManager<MyUser>(new UserStore<MyUser>(new MyDbContext()));
+
+            var currentUser = UserManager.FindById(userId);
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                FirstName = currentUser.MyUserInfo.FirstName,
+                LastName = currentUser.MyUserInfo.LastName,
+                PostalAddress = currentUser.PostalAddress
             };
             return View(model);
         }
@@ -211,6 +220,53 @@ namespace Demo.Controllers
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
+        }
+
+        //
+        // GET: /Manage/ChangeMyInfo
+        public ActionResult ChangeMyInfo()
+        {
+            var userId = User.Identity.GetUserId();
+
+            ApplicationUser currentUser = UserManager.FindById(userId);
+
+            ChangeMyInfoViewModel changeInfoViewModel = new ChangeMyInfoViewModel
+            {
+                FirstName = currentUser.MyUserInfo.FirstName,
+                LastName = currentUser.MyUserInfo.LastName,
+                PostalAddress = currentUser.PostalAddress
+            };
+
+            return View(changeInfoViewModel);
+        }
+
+        //
+        // POST: /Manage/ChangeMyInfo
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeMyInfo(ChangeMyInfoViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = User.Identity.GetUserId();
+
+            ApplicationUser currentUser = UserManager.FindById(userId);
+
+            if (currentUser.MyUserInfo == null)
+            {
+                currentUser.MyUserInfo = new MyUserInfo { FirstName = string.Empty, LastName = string.Empty };
+            }
+
+            currentUser.MyUserInfo.FirstName = model.FirstName;
+            currentUser.MyUserInfo.LastName = model.LastName;
+            currentUser.PostalAddress = model.PostalAddress;
+
+            UserManager.Update(currentUser);
+
+            return RedirectToAction("Index");
         }
 
         //
