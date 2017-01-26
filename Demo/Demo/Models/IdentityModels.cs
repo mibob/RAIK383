@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,7 +16,6 @@ namespace Demo.Models
     {
         public string PostalAddress { get; set; }
         public virtual MyUserInfo MyUserInfo { get; set; }
-
         public virtual ICollection<UserOrder> UserOrders { get; set; } = new HashSet<UserOrder>();
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -40,17 +40,25 @@ namespace Demo.Models
 
         public System.Data.Entity.DbSet<MyUserInfo> MyUserInfo { get; set; }
         public System.Data.Entity.DbSet<Product> Product { get; set; }
+
         public System.Data.Entity.DbSet<UserOrder> UserOrder { get; set; }
+        public System.Data.Entity.DbSet<OrderProduct> OrderProduct { get; set; }
     }
 
     public class UserOrder
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
-        public int ProductId { get; set; }
-        [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
-        [ForeignKey("ProductId")]
+        public DateTime CreatedOn { get; set; }
+
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
+
+    }
+
+    public class OrderProduct
+    {
+        public int Id { get; set; }
+        public virtual UserOrder UserOrder { get; set; }
         public virtual Product Product { get; set; }
     }
 

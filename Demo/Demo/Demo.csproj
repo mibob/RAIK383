@@ -189,9 +189,13 @@
     <Compile Include="Migrations\201701260126373_Products.Designer.cs">
       <DependentUpon>201701260126373_Products.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701260146385_UserOrders.cs" />
-    <Compile Include="Migrations\201701260146385_UserOrders.Designer.cs">
-      <DependentUpon>201701260146385_UserOrders.cs</DependentUpon>
+    <Compile Include="Migrations\201701262316158_UserOrders.cs" />
+    <Compile Include="Migrations\201701262316158_UserOrders.Designer.cs">
+      <DependentUpon>201701262316158_UserOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701262333326_OrderProducts.cs" />
+    <Compile Include="Migrations\201701262333326_OrderProducts.Designer.cs">
+      <DependentUpon>201701262333326_OrderProducts.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -281,8 +285,11 @@
     <EmbeddedResource Include="Migrations\201701260126373_Products.resx">
       <DependentUpon>201701260126373_Products.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701260146385_UserOrders.resx">
-      <DependentUpon>201701260146385_UserOrders.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701262316158_UserOrders.resx">
+      <DependentUpon>201701262316158_UserOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701262333326_OrderProducts.resx">
+      <DependentUpon>201701262333326_OrderProducts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

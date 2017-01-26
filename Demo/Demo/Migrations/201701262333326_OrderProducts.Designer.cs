@@ -7,13 +7,13 @@ namespace Demo.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UserOrders : IMigrationMetadata
+    public sealed partial class OrderProducts : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UserOrders));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(OrderProducts));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701260146385_UserOrders"; }
+            get { return "201701262333326_OrderProducts"; }
         }
         
         string IMigrationMetadata.Source

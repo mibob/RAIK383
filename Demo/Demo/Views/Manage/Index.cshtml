@@ -39,13 +39,16 @@
                 <tbody>
                     @foreach (UserOrder uo in Model.MyOrders)
                     {
-                    <tr>
-                        <td>@uo.Id</td>
-                        <td>@uo.Product.Name</td>
-                        <td>@uo.Product.Size</td>
-                        <td>@uo.Product.Color</td>
-                        <td>@uo.Product.Brand</td>
-                    </tr>
+                        foreach (OrderProduct op in uo.OrderProducts)
+                            {
+                            <tr>
+                                <td> @uo.Id </td>
+                                <td> @op.Product.Name </td>
+                                <td> @op.Product.Size </td>
+                                <td> @op.Product.Color </td>
+                                <td> @op.Product.Brand </td>
+                            </tr>
+                            }
                     }
                 </tbody>
             </table>
@@ -55,11 +58,11 @@
             [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+                        @Html.ActionLink("Change your password", "ChangePassword")
             }
             else
             {
-                @Html.ActionLink("Create", "SetPassword")
+                        @Html.ActionLink("Create", "SetPassword")
             }
             ]
         </dd>
