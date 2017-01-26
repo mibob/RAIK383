@@ -1,8 +1,12 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Demo.Models
 {
@@ -12,6 +16,7 @@ namespace Demo.Models
         public string PostalAddress { get; set; }
         public virtual MyUserInfo MyUserInfo { get; set; }
 
+        public virtual ICollection<UserOrder> UserOrders { get; set; } = new HashSet<UserOrder>();
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -34,10 +39,32 @@ namespace Demo.Models
         }
 
         public System.Data.Entity.DbSet<MyUserInfo> MyUserInfo { get; set; }
-
+        public System.Data.Entity.DbSet<Product> Product { get; set; }
+        public System.Data.Entity.DbSet<UserOrder> UserOrder { get; set; }
     }
 
-    public class MyUserInfo{
+    public class UserOrder
+    {
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public int ProductId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
+        [ForeignKey("ProductId")]
+        public virtual Product Product { get; set; }
+    }
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Size { get; set; }
+        public string Color { get; set; }
+        public string Brand { get; set; }
+        public DateTime AddedOn { get; set; }
+    }
+
+    public class MyUserInfo {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

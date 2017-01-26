@@ -18,6 +18,8 @@ namespace Demo.Models
         public string LastName { get; set; }
         [Display(Name = "Postal Address")]
         public string PostalAddress { get; set; }
+
+        public IEnumerable<UserOrder> MyOrders { get; set; }
     }
 
     public class ManageLoginsViewModel

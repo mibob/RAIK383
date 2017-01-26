@@ -79,7 +79,8 @@ namespace Demo.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 FirstName = currentUser.MyUserInfo.FirstName,
                 LastName = currentUser.MyUserInfo.LastName,
-                PostalAddress = currentUser.PostalAddress
+                PostalAddress = currentUser.PostalAddress,
+                MyOrders = currentUser.UserOrders
             };
             return View(model);
         }

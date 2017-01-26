@@ -185,6 +185,14 @@
     <Compile Include="Migrations\201701160955157_FirstLastNames.Designer.cs">
       <DependentUpon>201701160955157_FirstLastNames.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701260126373_Products.cs" />
+    <Compile Include="Migrations\201701260126373_Products.Designer.cs">
+      <DependentUpon>201701260126373_Products.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701260146385_UserOrders.cs" />
+    <Compile Include="Migrations\201701260146385_UserOrders.Designer.cs">
+      <DependentUpon>201701260146385_UserOrders.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -269,6 +277,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701160955157_FirstLastNames.resx">
       <DependentUpon>201701160955157_FirstLastNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260126373_Products.resx">
+      <DependentUpon>201701260126373_Products.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260146385_UserOrders.resx">
+      <DependentUpon>201701260146385_UserOrders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

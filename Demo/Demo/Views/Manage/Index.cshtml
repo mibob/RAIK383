@@ -1,4 +1,5 @@
-﻿@model Demo.Models.IndexViewModel
+﻿@using Demo.Models
+@model Demo.Models.IndexViewModel
 @{
     ViewBag.Title = "Manage";
 }
@@ -22,6 +23,32 @@
             [
                 @Html.ActionLink("Change your info", "ChangeMyinfo")
             ]
+        </dd>
+        <dt>My Orders:</dt>
+        <dd>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>Product Name</th>
+                        <th>Product Size</th>
+                        <th>Product Color</th>
+                        <th>Product Brand</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (UserOrder uo in Model.MyOrders)
+                    {
+                    <tr>
+                        <td>@uo.Id</td>
+                        <td>@uo.Product.Name</td>
+                        <td>@uo.Product.Size</td>
+                        <td>@uo.Product.Color</td>
+                        <td>@uo.Product.Brand</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
         </dd>
         <dt>Password:</dt>
         <dd>
