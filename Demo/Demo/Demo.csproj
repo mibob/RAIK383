@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201701262333326_OrderProducts.Designer.cs">
       <DependentUpon>201701262333326_OrderProducts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701272140265_OtherOrders.cs" />
+    <Compile Include="Migrations\201701272140265_OtherOrders.Designer.cs">
+      <DependentUpon>201701272140265_OtherOrders.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -290,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701262333326_OrderProducts.resx">
       <DependentUpon>201701262333326_OrderProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701272140265_OtherOrders.resx">
+      <DependentUpon>201701272140265_OtherOrders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

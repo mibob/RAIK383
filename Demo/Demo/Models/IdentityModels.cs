@@ -16,7 +16,7 @@ namespace Demo.Models
     {
         public string PostalAddress { get; set; }
         public virtual MyUserInfo MyUserInfo { get; set; }
-        public virtual ICollection<UserOrder> UserOrders { get; set; } = new HashSet<UserOrder>();
+        public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -41,26 +41,26 @@ namespace Demo.Models
         public System.Data.Entity.DbSet<MyUserInfo> MyUserInfo { get; set; }
         public System.Data.Entity.DbSet<Product> Product { get; set; }
 
-        public System.Data.Entity.DbSet<UserOrder> UserOrder { get; set; }
-        public System.Data.Entity.DbSet<OrderProduct> OrderProduct { get; set; }
+        public System.Data.Entity.DbSet<Order> Order { get; set; }
+        //public System.Data.Entity.DbSet<OrderProduct> OrderProduct { get; set; }
     }
 
-    public class UserOrder
+    public class Order
     {
         public int Id { get; set; }
         public virtual ApplicationUser User { get; set; }
         public DateTime CreatedOn { get; set; }
 
-        public virtual ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
+        public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
     }
 
-    public class OrderProduct
-    {
-        public int Id { get; set; }
-        public virtual UserOrder UserOrder { get; set; }
-        public virtual Product Product { get; set; }
-    }
+    //public class OrderProduct
+    //{
+    //    public int Id { get; set; }
+    //    public virtual UserOrder UserOrder { get; set; }
+    //    public virtual Product Product { get; set; }
+    //}
 
     public class Product
     {
@@ -70,6 +70,8 @@ namespace Demo.Models
         public string Color { get; set; }
         public string Brand { get; set; }
         public DateTime AddedOn { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
     }
 
     public class MyUserInfo {

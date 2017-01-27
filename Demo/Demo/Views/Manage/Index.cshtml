@@ -37,16 +37,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (UserOrder uo in Model.MyOrders)
+                    @foreach (Order uo in Model.MyOrders)
                     {
-                        foreach (OrderProduct op in uo.OrderProducts)
+                        foreach (Product op in uo.Products)
                             {
                             <tr>
                                 <td> @uo.Id </td>
-                                <td> @op.Product.Name </td>
-                                <td> @op.Product.Size </td>
-                                <td> @op.Product.Color </td>
-                                <td> @op.Product.Brand </td>
+                                <td> @op.Name </td>
+                                <td> @op.Size </td>
+                                <td> @op.Color </td>
+                                <td> @op.Brand </td>
                             </tr>
                             }
                     }

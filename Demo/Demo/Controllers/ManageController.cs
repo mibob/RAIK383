@@ -80,7 +80,7 @@ namespace Demo.Controllers
                 FirstName = currentUser.MyUserInfo.FirstName,
                 LastName = currentUser.MyUserInfo.LastName,
                 PostalAddress = currentUser.PostalAddress,
-                MyOrders = currentUser.UserOrders
+                MyOrders = currentUser.Orders
             };
             return View(model);
         }
