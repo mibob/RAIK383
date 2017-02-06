@@ -42,7 +42,6 @@ namespace Demo.Models
         public System.Data.Entity.DbSet<Product> Product { get; set; }
 
         public System.Data.Entity.DbSet<Order> Order { get; set; }
-        //public System.Data.Entity.DbSet<OrderProduct> OrderProduct { get; set; }
     }
 
     public class Order
@@ -52,15 +51,7 @@ namespace Demo.Models
         public DateTime CreatedOn { get; set; }
 
         public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
-
     }
-
-    //public class OrderProduct
-    //{
-    //    public int Id { get; set; }
-    //    public virtual UserOrder UserOrder { get; set; }
-    //    public virtual Product Product { get; set; }
-    //}
 
     public class Product
     {
