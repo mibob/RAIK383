@@ -8,6 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using Demo.Models;
 
+// Code for this controller was fully scaffolded
+// from the data model for Product all the way to the Views
+// and is fully functional although it is not good design
+// Use instead Interfaces and Implementations as in OrderController
+// aiming for a design as that of UserManager and (I)UserStore
+// from the given AspNet.Identity package (minus the async Tasks
+// and the generic types there, for now) 
+
 namespace Demo.Controllers
 {
     [Authorize(Roles = "admin")]

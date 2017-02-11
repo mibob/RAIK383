@@ -3,16 +3,10 @@ namespace Demo.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class OtherOrders : DbMigration
+    public partial class UserOrderProducts : DbMigration
     {
         public override void Up()
         {
-            DropForeignKey("dbo.OrderProducts", "Product_Id", "dbo.Products");
-            DropForeignKey("dbo.OrderProducts", "UserOrder_Id", "dbo.UserOrders");
-            DropForeignKey("dbo.UserOrders", "User_Id", "dbo.AspNetUsers");
-            DropIndex("dbo.OrderProducts", new[] { "Product_Id" });
-            DropIndex("dbo.OrderProducts", new[] { "UserOrder_Id" });
-            DropIndex("dbo.UserOrders", new[] { "User_Id" });
             CreateTable(
                 "dbo.Orders",
                 c => new
@@ -38,32 +32,10 @@ namespace Demo.Migrations
                 .Index(t => t.Product_Id)
                 .Index(t => t.Order_Id);
             
-            DropTable("dbo.OrderProducts");
-            DropTable("dbo.UserOrders");
         }
         
         public override void Down()
         {
-            CreateTable(
-                "dbo.UserOrders",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        CreatedOn = c.DateTime(nullable: false),
-                        User_Id = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.OrderProducts",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Product_Id = c.Int(),
-                        UserOrder_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
             DropForeignKey("dbo.Orders", "User_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.ProductOrders", "Order_Id", "dbo.Orders");
             DropForeignKey("dbo.ProductOrders", "Product_Id", "dbo.Products");
@@ -72,12 +44,6 @@ namespace Demo.Migrations
             DropIndex("dbo.Orders", new[] { "User_Id" });
             DropTable("dbo.ProductOrders");
             DropTable("dbo.Orders");
-            CreateIndex("dbo.UserOrders", "User_Id");
-            CreateIndex("dbo.OrderProducts", "UserOrder_Id");
-            CreateIndex("dbo.OrderProducts", "Product_Id");
-            AddForeignKey("dbo.UserOrders", "User_Id", "dbo.AspNetUsers", "Id");
-            AddForeignKey("dbo.OrderProducts", "UserOrder_Id", "dbo.UserOrders", "Id");
-            AddForeignKey("dbo.OrderProducts", "Product_Id", "dbo.Products", "Id");
         }
     }
 }
