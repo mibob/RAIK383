@@ -19,20 +19,23 @@ namespace Demo.Implementations.Tests
         {
             Mock<IProductStore> mockedStore = new Mock<IProductStore>();
 
+            DateTime orderDate = new DateTime(2017, 2, 8);
+
             mockedStore.Setup(x => x.GetList()).Returns(new List<Product> { new Product {
                                                                                 Price = 10,
                                                                                 AddedOn = new DateTime(2017, 2, 6),
                                                                                 Orders = new List<Order>() { new Order {
-                                                                                                            CreatedOn = new DateTime(2017, 2, 8)
+                                                                                                            CreatedOn = orderDate
                                                 } } } });
 
             ProductManager managerUnderTest = new ProductManager(mockedStore.Object);
-            IEnumerable<Product> saleItems = managerUnderTest.GetSaleItems(1, 1);
+            IEnumerable<Product> saleItems = managerUnderTest.GetSaleItems((decimal).01, 1);
+
+            int daysBelow = (int)(DateTime.Today.Date.Subtract(orderDate).TotalDays + 1);
 
             Assert.AreEqual(1, saleItems.Count());
 
-            //TODO: fix this to not use hard-coded number, but formula depending on days past
-            //Assert.AreEqual((decimal)9.8, saleItems.First().Price);
+            Assert.AreEqual((decimal)(10 - .01 * 10 * daysBelow), saleItems.First().Price);
         }
     }
 }
