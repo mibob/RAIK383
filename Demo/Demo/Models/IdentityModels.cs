@@ -62,6 +62,8 @@ namespace Demo.Models
         public string Brand { get; set; }
         public DateTime AddedOn { get; set; }
 
+        public decimal Price { get; set; }
+
         public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
     }
 
