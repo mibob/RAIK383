@@ -2,26 +2,39 @@
 
 @{
     ViewBag.Title = "Products";
+    
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Size)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Color)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Brand)
-        </th>
-        <th></th>
-    </tr>
+@section styles
+{
+    @Styles.Render("~/Content/datatablesCss")
+}
 
-@foreach (var item in Model) {
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+        </tr>
+    </thead>
+
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -36,9 +49,123 @@
             @Html.DisplayFor(modelItem => item.Brand)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
+            @Html.DisplayFor(modeItem => item.Price)
         </td>
     </tr>
 }
-
 </table>
+
+<button type="button" title="Show Sale Items" id="saleButton">Show Sale Items</button>
+
+<div title="Success" style="display:none" id="success"><b>Your order has been successful.</b></div>
+<div title="Error" style="display:none" id="error"><b>There was an error processing your order.</b></div>
+<div title="Warning" style="display:none" id="warning"><b>You did not select any items.</b></div>
+
+<div id="saleList" hidden>
+    <h2>Products On Sale</h2>
+
+    <br>
+    @using (Html.BeginForm("Order", null, FormMethod.Post, new { data_bind = "submit: submitSelected" }))
+    {
+    
+        @Html.CheckBox("SelectAll", new { id = "productsSelectAll", data_bind = "checked: allProductsSelected" })
+        @Html.Label("SELECT ALL", new { @for = "productsSelectAll" })
+
+    <br>
+
+    <ol data-bind="foreach: saleList">
+        <li>
+            @Html.CheckBox("selectMe", new { data_bind = "checkedValue: $data, checked: $parent.selectedProducts, attr: {id: 'sale'+$index()}" })
+            @Html.Label(" ", new { data_bind = "text: Name, attr: {for: 'sale'+$index()}" })
+            <span data-bind="text: Price"></span>
+        </li>
+    </ol>
+
+    @Html.Label("Total:")
+    <span data-bind = "text: orderTotal"></span>
+    <br />
+    
+    @Html.Label("Preferred delivery date:")
+    @Html.TextBox("deliverBy", DateTime.Today.AddDays(7).ToShortDateString(), new { id = "iamdate" })
+    <br />
+
+    <input type="submit" value="Place Order" />
+
+    }
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/knockout")
+
+
+
+    <script>
+        function ViewModel(saleArray) {
+            var self = this;
+
+            this.saleList = saleArray;
+            this.selectedProducts = ko.observableArray([]);
+
+            this.orderTotal = ko.computed(function () {
+                var total = 0;
+                $.each(self.selectedProducts(), function (index, item) {
+                    total += item.Price;
+                });
+                return total;
+            });
+
+            this.allProductsSelected = ko.pureComputed({
+                read: function () {
+                    return self.selectedProducts().length === self.saleList.length;
+                },
+
+                write: function (value) {
+                    self.selectedProducts(value ? self.saleList : []);
+                }
+            });
+
+            this.submitSelected = function (formElement) {
+
+                var actionUrl = '@Url.Action("MakeOrder", "Order")';
+
+                if (self.selectedProducts().length === 0) $("#warning").dialog();
+                else {
+                    var data = { "selectedProducts": $.map(self.selectedProducts(), function (item) { return item.Id }) };
+
+                    $.ajax({
+                        type: "POST",
+                        url: actionUrl,
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8"
+                    }).done(function () { $("#success").dialog() })
+                      .fail(function () { $("#error").dialog() });
+                }
+                
+            }
+        }
+
+        $(function () {
+            $(".table").DataTable();
+
+            $("#iamdate").datepicker();
+
+            var saleItems = [];
+
+            var actionUrl = '@Url.Action("GetSale", "Order")';
+
+            $("#saleButton").click(function () {
+                $.getJSON(actionUrl).done(loadSale);
+            });
+
+            function loadSale(response) {
+                if (response != null) {
+                    $("#saleList").show();
+                    $.each(response, function (index) { saleItems.push(this) });
+                    if (saleItems.length) ko.applyBindings(new ViewModel(saleItems));
+                }
+            }
+        });
+    </script>
+}
