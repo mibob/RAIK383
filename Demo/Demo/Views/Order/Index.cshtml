@@ -122,7 +122,7 @@
                 },
 
                 write: function (value) {
-                    self.selectedProducts(value ? self.saleList : []);
+                    self.selectedProducts(value ? self.saleList.slice(0) : []);
                 }
             });
 
