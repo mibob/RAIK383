@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Demo.Interfaces;
+using Demo.Models;
 
 namespace Demo.Controllers
 {
@@ -17,8 +18,25 @@ namespace Demo.Controllers
             productManager = prodManager;
         }
 
+        public JsonResult GetSale()
+        {
+            var productsToSelect = productManager.GetSaleItems((decimal).01, 5).Select(p => new {
+                                                                                                Id  = p.Id,
+                                                                                                Name = p.Name,
+                                                                                                Price = p.Price
+                                                                                                });
+
+            return Json(productsToSelect.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public bool MakeOrder(int[] selectedProducts)
+        {
+            return true;
+        }
+
         // GET: Order
-        // Gets list of all Products for the user to chose from
+        // Gets list of all Products for the user to choose from
         public ActionResult Index()
         {
             return View(productManager.GetList());
