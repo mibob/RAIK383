@@ -39,6 +39,7 @@ namespace Demo.Controllers
         [HttpPost]
         public bool MakeOrder(int[] selectedProducts)
         {
+            // TODO: user boolean retunr status to flag error for client-side
             return orderManager.MakeOrder(User.Identity.GetUserId(), selectedProducts);
         }
 

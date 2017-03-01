@@ -38,15 +38,15 @@ namespace Demo.Implementations
 
             currentUser.Orders.Add(userOrder);
 
-            //try
-            //{
+            try
+            {
                 this.Update(currentUser);
                 return true;
-            //}
-            //catch
-            //{
-              //  return false;
-           // }
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
