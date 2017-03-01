@@ -187,6 +187,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Implementations\OrderStore.cs" />
+    <Compile Include="Interfaces\IOrderStore.cs" />
+    <Compile Include="Implementations\OrderManager.cs" />
+    <Compile Include="Interfaces\IOrderManager.cs" />
     <Compile Include="Implementations\ProductStore.cs" />
     <Compile Include="Interfaces\IProductStore.cs" />
     <Compile Include="Implementations\ProductManager.cs" />

@@ -15,6 +15,9 @@ namespace Demo.App_Start
     using Demo.Implementations;
     using Demo.Models;
 
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -50,6 +53,8 @@ namespace Demo.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
                 kernel.Bind<IProductManager>().To<ProductManager>();
                 kernel.Bind<IProductStore>().To<ProductStore>();
+                kernel.Bind<IOrderManager>().To<OrderManager>();
+                kernel.Bind<IOrderStore>().To<OrderStore>();
                 kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
 
                 RegisterServices(kernel);
