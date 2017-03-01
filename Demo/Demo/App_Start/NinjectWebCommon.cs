@@ -5,6 +5,7 @@ namespace Demo.App_Start
 {
     using System;
     using System.Web;
+    using System.Data.Entity;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
@@ -14,6 +15,9 @@ namespace Demo.App_Start
     using Demo.Interfaces;
     using Demo.Implementations;
     using Demo.Models;
+
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
     public static class NinjectWebCommon 
     {
@@ -50,7 +54,9 @@ namespace Demo.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
                 kernel.Bind<IProductManager>().To<ProductManager>();
                 kernel.Bind<IProductStore>().To<ProductStore>();
+                kernel.Bind<IOrderManager>().To<OrderManager>();
                 kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
+                kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().WithConstructorArgument("context", context => context.Kernel.Get<ApplicationDbContext>());
 
                 RegisterServices(kernel);
                 return kernel;

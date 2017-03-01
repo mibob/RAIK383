@@ -5,6 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using Demo.Interfaces;
 using Demo.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+
 
 namespace Demo.Controllers
 {
@@ -12,10 +17,12 @@ namespace Demo.Controllers
     public class OrderController : Controller
     {
         private IProductManager productManager;
+        private IOrderManager orderManager;
 
-        public OrderController(IProductManager prodManager)
+        public OrderController(IProductManager prodManager, IOrderManager ordMgr)
         {
             productManager = prodManager;
+            orderManager = ordMgr;
         }
 
         public JsonResult GetSale()
@@ -32,7 +39,7 @@ namespace Demo.Controllers
         [HttpPost]
         public bool MakeOrder(int[] selectedProducts)
         {
-            return true;
+            return orderManager.MakeOrder(User.Identity.GetUserId(), selectedProducts);
         }
 
         // GET: Order
