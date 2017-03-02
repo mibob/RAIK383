@@ -39,7 +39,7 @@ namespace Demo.Controllers
         [HttpPost]
         public bool MakeOrder(int[] selectedProducts)
         {
-            // TODO: user boolean retunr status to flag error for client-side
+            // TODO: use boolean return status to flag error client-side
             return orderManager.MakeOrder(User.Identity.GetUserId(), selectedProducts);
         }
 
@@ -51,7 +51,7 @@ namespace Demo.Controllers
         }
 
         // GET: Order/Details/5
-        // Displays details of a Product
+        // Displays details of an Order
         public ActionResult Details(int id)
         {
             return View();
