@@ -11,3 +11,5 @@
 /Demo/Demo/Demo.csproj.user
 /Demo/.vs/config/applicationhost.config
 /Demo/Demo/Implementations/ProductManager.cs~RF83669684.TMP
+/Demo/Demo/obj/Release
+/Demo/Demo.Tests/obj/Release

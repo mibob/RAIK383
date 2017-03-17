@@ -5,6 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using Demo.Interfaces;
 using Demo.Models;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 
 namespace Demo.Controllers
 {
@@ -12,10 +17,12 @@ namespace Demo.Controllers
     public class OrderController : Controller
     {
         private IProductManager productManager;
+        private IOrderManager orderManager;
 
-        public OrderController(IProductManager prodManager)
+        public OrderController(IProductManager prodManager, IOrderManager orderMgr)
         {
             productManager = prodManager;
+            orderManager = orderMgr;
         }
 
         public JsonResult GetSale()
@@ -32,7 +39,8 @@ namespace Demo.Controllers
         [HttpPost]
         public bool MakeOrder(int[] selectedProducts)
         {
-            return true;
+            // TODO: use booleane returned to detect failure on ajax.done and display error message client-side
+            return orderManager.CreateOrder(User.Identity.GetUserId(), selectedProducts);
         }
 
         // GET: Order
