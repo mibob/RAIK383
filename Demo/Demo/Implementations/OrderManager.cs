@@ -3,20 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Demo.Interfaces;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using Demo.Models;
+
 
 namespace Demo.Implementations
 {
-    public class OrderManager : IOrderManager
+    public class OrderManager : UserManager<ApplicationUser>, IOrderManager
     {
-        private IOrderStore orderStore; 
-        public OrderManager(IOrderStore ordStr)
+        IProductStore productStore;
+        public OrderManager(IProductStore prodStr, IUserStore<ApplicationUser> store) : base(store)
         {
-            orderStore = ordStr;
+            productStore = prodStr;
         }
-        public bool CreateOrder(string userId, int[] productIds)
+        public bool MakeOrder(string userId, int[] selectedProducts)
         {
-            return orderStore.Create(userId, productIds);
+            List<Product> orderProducts = new List<Product>();
+
+            foreach (int pid in selectedProducts)
+            {
+                orderProducts.Add(productStore.FindById(pid));
+            }
+
+            Order userOrder = new Order
+            {
+                Products = orderProducts,
+                CreatedOn = DateTime.Now
+            };
+
+            ApplicationUser currentUser = this.FindById(userId);
+
+            currentUser.Orders.Add(userOrder);
+
+            try
+            {
+                this.Update(currentUser);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

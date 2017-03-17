@@ -5,6 +5,7 @@ namespace Demo.App_Start
 {
     using System;
     using System.Web;
+    using System.Data.Entity;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
@@ -54,8 +55,8 @@ namespace Demo.App_Start
                 kernel.Bind<IProductManager>().To<ProductManager>();
                 kernel.Bind<IProductStore>().To<ProductStore>();
                 kernel.Bind<IOrderManager>().To<OrderManager>();
-                kernel.Bind<IOrderStore>().To<OrderStore>();
                 kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
+                kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().WithConstructorArgument("context", context => context.Kernel.Get<ApplicationDbContext>());
 
                 RegisterServices(kernel);
                 return kernel;

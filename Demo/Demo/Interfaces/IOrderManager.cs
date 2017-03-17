@@ -2,6 +2,6 @@
 {
     public interface IOrderManager
     {
-        bool CreateOrder(string userId, int[] productIds);
+        bool MakeOrder(string userId, int[] selectedProducts);
     }
 }

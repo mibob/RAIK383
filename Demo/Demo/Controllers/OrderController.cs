@@ -5,10 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using Demo.Interfaces;
 using Demo.Models;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 
 
 namespace Demo.Controllers
@@ -19,10 +19,10 @@ namespace Demo.Controllers
         private IProductManager productManager;
         private IOrderManager orderManager;
 
-        public OrderController(IProductManager prodManager, IOrderManager orderMgr)
+        public OrderController(IProductManager prodManager, IOrderManager ordMgr)
         {
             productManager = prodManager;
-            orderManager = orderMgr;
+            orderManager = ordMgr;
         }
 
         public JsonResult GetSale()
@@ -39,8 +39,8 @@ namespace Demo.Controllers
         [HttpPost]
         public bool MakeOrder(int[] selectedProducts)
         {
-            // TODO: use booleane returned to detect failure on ajax.done and display error message client-side
-            return orderManager.CreateOrder(User.Identity.GetUserId(), selectedProducts);
+            // TODO: use boolean return status to flag error client-side
+            return orderManager.MakeOrder(User.Identity.GetUserId(), selectedProducts);
         }
 
         // GET: Order
@@ -51,7 +51,7 @@ namespace Demo.Controllers
         }
 
         // GET: Order/Details/5
-        // Displays details of a Product
+        // Displays details of an Order
         public ActionResult Details(int id)
         {
             return View();
